@@ -7,8 +7,10 @@
 
 class Piece{
     
-    Position _pos;
     bool _white;
+
+    protected:
+    Position _pos;
 
     public:
     Piece(const Position& pos, bool white) : _pos(pos), _white(white){}; 
