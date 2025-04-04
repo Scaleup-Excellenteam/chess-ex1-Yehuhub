@@ -16,7 +16,7 @@ int main()
 		11 - there is not piece at the source  
 		12 - the piece in the source is piece of your opponent
 		13 - there one of your pieces at the destination 
-		21 - illegal movement of that piece 
+		21 - illegal movement of that piece  
 		31 - this movement will cause you checkmate
 
 		legal movements : 
@@ -26,6 +26,7 @@ int main()
 
 		/**/ 
 		{ // put your code here instead that code
+			cout << res;
 			cout << "code response >> ";
 			cin >> codeResponse;
 		}
