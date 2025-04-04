@@ -24,6 +24,5 @@ StatusCode Rook::isValidMove(const Position& dest, const BoardManager& board)con
             return StatusCode::IllegalMovement; // the movement is actually legal the the path is wrong(no correct status code)
         }
     }
-    
 
 }
