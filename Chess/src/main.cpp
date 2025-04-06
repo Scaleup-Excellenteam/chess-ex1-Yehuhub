@@ -1,11 +1,13 @@
 // Chess 
 #include "Chess.h"
+#include "BoardManager.h"
 
 int main()
 {
 	// string board = "RNBQKBNRPPPPPPPP################################pppppppprnbqkbnr"; 
-	string board = "##########################################R#############r#r#####";
+	string board = "##########################################R#R##R########r#######";
 	Chess a(board);
+	BoardManager bm(board);
 	int codeResponse = 0;
 	string res = a.getInput();
 	while (res != "exit")
@@ -26,8 +28,9 @@ int main()
 
 		/**/ 
 		{ // put your code here instead that code
-			cout << res;
-			cout << "code response >> ";
+			// cout << "code response >> ";
+			// cin >> codeResponse;
+			std::cout << bm.playMove(res) << std::endl;
 			cin >> codeResponse;
 		}
 		/**/

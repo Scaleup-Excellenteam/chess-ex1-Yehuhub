@@ -1,7 +1,9 @@
 
 #include "Rook.h"
+#include <iostream> //debug
 
-Rook::Rook(const Position& pos, bool white) : Piece(pos, white){}
+Rook::Rook(const Position& pos, bool white) : Piece(pos, white){
+}
 
 char Rook::getSymbol()const{
     return isWhite() ? 'R' : 'r';
@@ -28,4 +30,5 @@ StatusCode Rook::isValidMove(const Position& dest, const BoardManager& board)con
         }
     }
 
+    return StatusCode::LegalMovement;
 }

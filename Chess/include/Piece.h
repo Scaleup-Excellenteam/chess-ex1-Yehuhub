@@ -1,9 +1,11 @@
 #pragma once
 
+
 #include "Position.h"
 #include "StatusCode.h"
 //need to define Position√ (need to check if _pos(pos) works)
-//need to define enum or namespace for status codes
+
+class BoardManager;
 
 class Piece{
     
