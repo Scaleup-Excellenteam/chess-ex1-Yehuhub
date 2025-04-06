@@ -18,9 +18,12 @@ class BoardManager{
         BoardManager(const std::string& start = "RNBQKBNRPPPPPPPP################################pppppppprnbqkbnr"); // will be implemented once we have a factory
         BoardManager(const BoardManager &) = delete;
         BoardManager& operator=(const BoardManager&) = delete;
-        int playMove(const std::string & res);
+        StatusCode playMove(const std::string & res);
         const Piece * getPieceAt(const Position&)const;
+        std::unique_ptr<Piece> extractPieceAt(const Position&);
         bool isOccupied(const Position&)const;
         std::pair<Position, Position> resToPos(const std::string &);
-
+        bool isInCheck(bool white)const;
+        Position findKingPosition(bool white)const;
+        void insertPiece(const Position& , std::unique_ptr<Piece>&& );
 };

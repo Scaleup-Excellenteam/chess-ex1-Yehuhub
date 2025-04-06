@@ -3,7 +3,6 @@
 
 #include "Position.h"
 #include "StatusCode.h"
-//need to define Position√ (need to check if _pos(pos) works)
 
 class BoardManager;
 
@@ -15,13 +14,12 @@ class Piece{
     Position _pos;
 
     public:
-    Piece(const Position& pos, bool white) : _pos(pos), _white(white){}; 
+    Piece(const Position& pos, bool white); 
 
-    bool isWhite()const{ return _white; }; //for readability
+    bool isWhite()const; 
     void changePosition(const Position&);
     
     virtual char getSymbol()const = 0;
-    // virtual bool isPathClear(const Position&, const BoardManager&)const = 0;
     virtual StatusCode isValidMove(const Position&, const BoardManager&)const = 0;
 
 };

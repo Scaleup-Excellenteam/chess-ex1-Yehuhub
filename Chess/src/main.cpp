@@ -5,7 +5,7 @@
 int main()
 {
 	// string board = "RNBQKBNRPPPPPPPP################################pppppppprnbqkbnr"; 
-	string board = "##########################################R#R##R########r#######";
+	string board = "##########################################R####R########r#R#K###";
 	Chess a(board);
 	BoardManager bm(board);
 	int codeResponse = 0;
@@ -30,8 +30,9 @@ int main()
 		{ // put your code here instead that code
 			// cout << "code response >> ";
 			// cin >> codeResponse;
-			std::cout << bm.playMove(res) << std::endl;
-			cin >> codeResponse;
+			codeResponse = static_cast<int>(bm.playMove(res));
+			std::cout<<codeResponse<<std::endl;
+			// cin>>codeResponse;
 		}
 		/**/
 
