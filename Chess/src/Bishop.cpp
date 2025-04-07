@@ -1,23 +1,25 @@
-#include "Rook.h"
+#include "Bishop.h"
 
-Rook::Rook(const Position& pos, bool white) : Piece(pos, white){}
+Bishop::Bishop(const Position& pos, bool white) : Piece(pos, white){}
 
-char Rook::getSymbol()const{
-    return isWhite() ? 'R' : 'r';
+char Bishop::getSymbol()const{
+    return isWhite() ? 'B' : 'b';
 }
 
-StatusCode Rook::isValidMove(const Position& dest, const BoardManager& board)const{
+StatusCode Bishop::isValidMove(const Position& dest, const BoardManager& board)const{
     
+    int dX = dest._x - _pos._x;
+    int dY = dest._y - _pos._y;
 
     //-------check if movement was valid
-    if(dest._x != _pos._x && dest._y != _pos._y){
+    if(abs(dX) != abs(dY)){
         return StatusCode::IllegalMovement;
     }
 
     //-------check if the path is clear
     //find the direction vector and normalize to 1(specific for rook)
-    Position dir((dest._x == _pos._x) ? 0 : (dest._x > _pos._x ? 1 : -1),
-                 (dest._y == _pos._y) ? 0 : (dest._y > _pos._y ? 1 : -1)); 
+    Position dir((dX > 0) ? 1 : -1,
+                 (dY > 0) ? 1 : -1); 
     Position current(_pos);
 
     while(current != dest){

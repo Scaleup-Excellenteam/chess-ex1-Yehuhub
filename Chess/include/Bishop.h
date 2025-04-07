@@ -3,10 +3,10 @@
 #include "BoardManager.h"
 #include "Piece.h"
 
-class Rook : public Piece{
+class Bishop : public Piece{
 
     public:
-    Rook(const Position&, bool white);
+    Bishop(const Position&, bool white);
 
     virtual char getSymbol()const override;
     virtual StatusCode isValidMove(const Position& , const BoardManager&)const override;

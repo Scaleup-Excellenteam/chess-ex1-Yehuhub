@@ -101,16 +101,7 @@ StatusCode BoardManager::playMove(const std::string & res){
         return StatusCode::IllegalMovement;
     }
 
-    //Actually check for checks and move/return cannot move (needs to be delegated to another function for cleaner implementation)
-    // auto extractedDest = extractPieceAt(destPos); //it is out of the vector and kept if needs to be returned to original pos
-    // auto extractedSrc = extractPieceAt(srcPos);
-    // insertPiece(destPos, std::move(extractedSrc));
-    // if(isInCheck(_whiteTurn)){
-    //     insertPiece(srcPos, std::move(extractPieceAt(destPos)));
-    //     insertPiece(destPos, std::move(extractedDest));
-    //     return StatusCode::MoveCauseOwnCheck;
-    // }
-
+    //look for checks and return correct status code
     StatusCode checks = tryChecks(srcPos, destPos);
     if(checks != StatusCode::MoveCauseOwnCheck){
         _whiteTurn = !_whiteTurn;
@@ -118,6 +109,14 @@ StatusCode BoardManager::playMove(const std::string & res){
     return checks;
 }
 
+/**
+ * @brief attempts to move a piece from the source position to the destination position,
+ *  checks if the move results in a check for either player, and returns a corresponding StatusCode
+ * 
+ * @param src - src position for piece
+ * @param dest - destination position
+ * @return StatusCode 
+ */
 StatusCode BoardManager::tryChecks(const Position& src, const Position& dest){
     auto extractedSrc = extractPieceAt(src);
     auto extractedDest = extractPieceAt(dest); //it is out of the vector and kept if needs to be returned to original pos
@@ -148,17 +147,16 @@ std::pair<Position, Position> BoardManager::resToPos(const std::string & res){
     Position src;
 
     src._y = std::toupper(res[0]) - 'A' + 1;
-    src._x = res[1] - 48;
+    src._x = res[1] - '0';
 
     dest._y = std::toupper(res[2]) - 'A' + 1;
-    dest._x = res[3] - 48;
+    dest._x = res[3] - '0';
 
     return std::pair(src, dest);
 }
 
 
 
-//this should probably be changed to look for checks so it also looks for good checks(return value StatusCode)
 /**
  * @brief function finds the wanted king's position and checks if in check
  * 
