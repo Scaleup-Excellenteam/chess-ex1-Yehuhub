@@ -92,8 +92,6 @@ StatusCode BoardManager::playMove(const std::string & res){
         return StatusCode::WrongPieceAtSource;
     }
 
-    // std::cout<< src._x << " "<< src._y <<std::endl;
-    // std::cout<< dest._x << " "<< dest._y <<std::endl;
 
     if(destPiece && srcPiece->isWhite() == destPiece->isWhite()){
         return StatusCode::OwnPieceAtDest;
@@ -104,18 +102,37 @@ StatusCode BoardManager::playMove(const std::string & res){
     }
 
     //Actually check for checks and move/return cannot move (needs to be delegated to another function for cleaner implementation)
-    auto extractedDest = extractPieceAt(destPos); //it is out of the vector and kept if needs to be returned to original pos
-    auto extractedSrc = extractPieceAt(srcPos);
-    insertPiece(destPos, std::move(extractedSrc));
+    // auto extractedDest = extractPieceAt(destPos); //it is out of the vector and kept if needs to be returned to original pos
+    // auto extractedSrc = extractPieceAt(srcPos);
+    // insertPiece(destPos, std::move(extractedSrc));
+    // if(isInCheck(_whiteTurn)){
+    //     insertPiece(srcPos, std::move(extractPieceAt(destPos)));
+    //     insertPiece(destPos, std::move(extractedDest));
+    //     return StatusCode::MoveCauseOwnCheck;
+    // }
+
+    StatusCode checks = tryChecks(srcPos, destPos);
+    if(checks != StatusCode::MoveCauseOwnCheck){
+        _whiteTurn = !_whiteTurn;
+    }
+    return checks;
+}
+
+StatusCode BoardManager::tryChecks(const Position& src, const Position& dest){
+    auto extractedSrc = extractPieceAt(src);
+    auto extractedDest = extractPieceAt(dest); //it is out of the vector and kept if needs to be returned to original pos
+
+    insertPiece(dest, std::move(extractedSrc));
     if(isInCheck(_whiteTurn)){
-        insertPiece(srcPos, std::move(extractPieceAt(destPos)));
-        insertPiece(destPos, std::move(extractedDest));
+        insertPiece(src, std::move(extractPieceAt(dest)));
+        insertPiece(dest, std::move(extractedDest));
         return StatusCode::MoveCauseOwnCheck;
+    }else if(isInCheck(!_whiteTurn)){
+        return StatusCode::ValidMoveCheckEnemy;
+    }else{
+        return StatusCode::ValidMoveNextTurn;
     }
 
-
-    _whiteTurn = !_whiteTurn;
-    return StatusCode::ValidMoveNextTurn; //temporary
 }
 
 
@@ -150,12 +167,10 @@ std::pair<Position, Position> BoardManager::resToPos(const std::string & res){
  * @return false - if selected color is not in check
  */
 bool BoardManager::isInCheck(bool white)const{
-    Position kingPos = findKingPosition(white);
-    // std::cout<<kingPos._x << " "<< kingPos._y<<std::endl;
-    // std::cout<< white <<std::endl;
+    Position myKingPos = findKingPosition(white);
 
     //in a weird case we dont have a king of that color(playing with no kings)
-    if(kingPos._x == -1 || kingPos._y == -1){
+    if(myKingPos._x == -1 || myKingPos._y == -1){
         return false;
     }
 
@@ -163,7 +178,7 @@ bool BoardManager::isInCheck(bool white)const{
         for (int x = 0 ; x < BOARDSIZE ; x++){
             auto tempPiece = getPieceAt({x + 1, y + 1});
             if(tempPiece && tempPiece->isWhite() != white){
-                if(tempPiece->isValidMove(kingPos, *this) == StatusCode::LegalMovement){
+                if(tempPiece->isValidMove(myKingPos, *this) == StatusCode::LegalMovement){
                     return true;
                 }
             }

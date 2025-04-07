@@ -15,6 +15,7 @@ class Piece{
 
     public:
     Piece(const Position& pos, bool white); 
+    virtual ~Piece() = default;
 
     bool isWhite()const; 
     void changePosition(const Position&);

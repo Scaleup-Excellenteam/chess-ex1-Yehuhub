@@ -26,4 +26,5 @@ class BoardManager{
         bool isInCheck(bool white)const;
         Position findKingPosition(bool white)const;
         void insertPiece(const Position& , std::unique_ptr<Piece>&& );
+        StatusCode tryChecks(const Position&, const Position&);
 };

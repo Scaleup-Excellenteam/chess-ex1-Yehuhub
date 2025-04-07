@@ -19,6 +19,8 @@ endif ()
 
 add_executable (Chess "")
 
+include_directories(SYSTEM "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1")
+
 
 add_subdirectory (include)
 add_subdirectory (src)
