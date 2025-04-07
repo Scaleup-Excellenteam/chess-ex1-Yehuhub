@@ -5,8 +5,8 @@
 
 King::King(const Position& pos, bool white) : Piece(pos, white){}
 
-char King::getSymbol()const{
-    return isWhite() ? 'K' : 'k';
+bool King::isKing()const{
+    return true;
 }
 
 StatusCode King::isValidMove(const Position& dest, const BoardManager& board)const{

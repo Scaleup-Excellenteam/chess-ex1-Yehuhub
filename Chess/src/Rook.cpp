@@ -2,8 +2,8 @@
 
 Rook::Rook(const Position& pos, bool white) : Piece(pos, white){}
 
-char Rook::getSymbol()const{
-    return isWhite() ? 'R' : 'r';
+bool Rook::isKing()const{
+    return false;
 }
 
 StatusCode Rook::isValidMove(const Position& dest, const BoardManager& board)const{

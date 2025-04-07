@@ -2,8 +2,8 @@
 
 Queen::Queen(const Position& pos, bool white) : Piece(pos, white){}
 
-char Queen::getSymbol()const{
-    return isWhite() ? 'R' : 'r';
+bool Queen::isKing()const{
+    return false;
 }
 
 StatusCode Queen::isValidMove(const Position& dest, const BoardManager& board)const{

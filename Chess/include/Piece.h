@@ -20,7 +20,7 @@ class Piece{
     bool isWhite()const; 
     void changePosition(const Position&);
     
-    virtual char getSymbol()const = 0;
+    virtual bool isKing()const = 0;
     virtual StatusCode isValidMove(const Position&, const BoardManager&)const = 0;
 
 };

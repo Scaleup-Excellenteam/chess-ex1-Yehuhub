@@ -8,6 +8,6 @@ class Queen : public Piece{
     public:
     Queen(const Position&, bool white);
 
-    virtual char getSymbol()const override;
+    virtual bool isKing()const override;
     virtual StatusCode isValidMove(const Position& , const BoardManager&)const override;
 };

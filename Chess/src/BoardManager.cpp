@@ -193,13 +193,11 @@ bool BoardManager::isInCheck(bool white)const{
  */
 Position BoardManager::findKingPosition(bool white)const{
 
-    char kingSymbol = white ? 'K' : 'k';
-
     for (int y = 0 ; y < BOARDSIZE ; y++){
         for (int x = 0 ; x < BOARDSIZE ; x++){
             Position pos(x + 1, y + 1);
             auto tempPiece = getPieceAt(pos);
-            if(tempPiece && tempPiece->getSymbol() == kingSymbol){
+            if(tempPiece && tempPiece->isKing() && tempPiece->isWhite() == white){
                 return pos;
             }
         }

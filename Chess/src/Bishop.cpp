@@ -2,8 +2,8 @@
 
 Bishop::Bishop(const Position& pos, bool white) : Piece(pos, white){}
 
-char Bishop::getSymbol()const{
-    return isWhite() ? 'B' : 'b';
+bool Bishop::isKing()const{
+    return false;
 }
 
 StatusCode Bishop::isValidMove(const Position& dest, const BoardManager& board)const{
