@@ -20,13 +20,9 @@ StatusCode Bishop::isValidMove(const Position& dest, const BoardManager& board)c
     //find the direction vector and normalize to 1(specific for rook)
     Position dir((dX > 0) ? 1 : -1,
                  (dY > 0) ? 1 : -1); 
-    Position current(_pos);
 
-    while(current != dest){
-        current += dir;
-        if(current != dest && board.isOccupied(current)){
-            return StatusCode::IllegalMovement; // the movement is actually legal but the path is not clear(no correct status code)
-        }
+    if(!board.isPathClear(_pos, dest, dir)){
+        return StatusCode::IllegalMovement;
     }
 
     return StatusCode::LegalMovement;

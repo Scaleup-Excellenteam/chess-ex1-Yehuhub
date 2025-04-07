@@ -206,3 +206,15 @@ Position BoardManager::findKingPosition(bool white)const{
     }
     return {-1,-1}; //for game with no kings
 }
+
+bool BoardManager::isPathClear(const Position& src, const Position& dest, const Position& dir)const{
+    Position current(src);
+
+    while(current != dest){
+        current += dir;
+        if(current != dest && isOccupied(current)){
+            return false; // the movement is actually legal but the path is not clear(no correct status code)
+        }
+    }
+    return true;
+}
