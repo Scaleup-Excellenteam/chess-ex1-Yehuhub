@@ -20,7 +20,7 @@ BoardManager::BoardManager(const std::string& start) : _whiteTurn(true){
 
         for(size_t j = 0; j < BOARDSIZE ; j++){
             char symbol = start[i * BOARDSIZE + j];
-            row.emplace_back(pieceFactory(symbol ,Position(j + 1, i + 1)));
+            row.emplace_back(pieceFactory(symbol ,Position(j , i )));
         }
         _gameBoard.emplace_back(std::move(row));
     }
@@ -34,7 +34,7 @@ BoardManager::BoardManager(const std::string& start) : _whiteTurn(true){
  * @return false - no piece at the position
  */
 bool BoardManager::isOccupied(const Position& pos)const{
-    return _gameBoard[pos._y - 1][pos._x - 1].get();
+    return _gameBoard[pos._y][pos._x].get();
 }
 
 /**
@@ -44,7 +44,7 @@ bool BoardManager::isOccupied(const Position& pos)const{
  * @return const Piece* - const raw pointer to the piece
  */
 const Piece * BoardManager::getPieceAt(const Position& pos)const{
-    return _gameBoard[pos._y - 1][pos._x - 1].get();
+    return _gameBoard[pos._y][pos._x].get();
 }
 
 /**
@@ -54,7 +54,7 @@ const Piece * BoardManager::getPieceAt(const Position& pos)const{
  * @return std::unique_ptr<Piece> - returns the pulled piece
  */
 std::unique_ptr<Piece> BoardManager::extractPieceAt(const Position& pos){
-    return std::move(_gameBoard[pos._y - 1][pos._x - 1]);
+    return std::move(_gameBoard[pos._y][pos._x]);
 }
 
 /**
@@ -67,7 +67,7 @@ void BoardManager::insertPiece(const Position& where, std::unique_ptr<Piece>&& p
     if(piece){
         piece->changePosition(where);
     }
-    _gameBoard[where._y - 1][where._x - 1] = std::move(piece);
+    _gameBoard[where._y][where._x] = std::move(piece);
 }
 
 
@@ -146,11 +146,11 @@ std::pair<Position, Position> BoardManager::resToPos(const std::string & res){
     Position dest;
     Position src;
 
-    src._y = std::toupper(res[0]) - 'A' + 1;
-    src._x = res[1] - '0';
+    src._y = std::toupper(res[0]) - 'A';
+    src._x = res[1] - '1';
 
-    dest._y = std::toupper(res[2]) - 'A' + 1;
-    dest._x = res[3] - '0';
+    dest._y = std::toupper(res[2]) - 'A';
+    dest._x = res[3] - '1';
 
     return std::pair(src, dest);
 }
@@ -174,7 +174,7 @@ bool BoardManager::isInCheck(bool white)const{
 
     for (int y = 0 ; y < BOARDSIZE ; y++){
         for (int x = 0 ; x < BOARDSIZE ; x++){
-            auto tempPiece = getPieceAt({x + 1, y + 1});
+            auto tempPiece = getPieceAt({x, y});
             if(tempPiece && tempPiece->isWhite() != white){
                 if(tempPiece->isValidMove(myKingPos, *this) == StatusCode::LegalMovement){
                     return true;
@@ -195,7 +195,7 @@ Position BoardManager::findKingPosition(bool white)const{
 
     for (int y = 0 ; y < BOARDSIZE ; y++){
         for (int x = 0 ; x < BOARDSIZE ; x++){
-            Position pos(x + 1, y + 1);
+            Position pos(x, y);
             auto tempPiece = getPieceAt(pos);
             if(tempPiece && tempPiece->isKing() && tempPiece->isWhite() == white){
                 return pos;
